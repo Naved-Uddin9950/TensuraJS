@@ -11,26 +11,32 @@
     <!-- Components -->
     <!-- <component render="https://noris.netlify.app/">Noris</component>
     <component render="https://personaforge.netlify.app/">Personaforge</component>
-    <component render="https://seeksphere.onrender.com/">SeekSphere</component>
+    <component render="https://seeksphere.onrender.com/">SeekSphere</component> -->
     
 
-    <div type="component"></div> -->
+    <!-- <div type="component"></div> -->
 
 
     <!-- Router -->
     <!-- <a href="#" route="/home" path="home.html">Hello</a>
-    <button route="/" path="index.html">Click Me</button>
-    -->
+    <button route="/" path="index.html">Click Me</button> -->
+   
     
-    
-    <h1>Hello World!</h1>
-    
-
-
+    <a href="/home">Home</a>
+    <button route="/home">Click Me</button>
     
 
 
+    
 
+
+
+    <script>
+        window.routes = {
+            '/' : 'index.html',
+            '/home' : 'home.html'
+        }
+    </script>
     <script type="module" src="./scripts/app.js"></script>
 </body>
 </html>

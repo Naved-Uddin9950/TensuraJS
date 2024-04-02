@@ -1,40 +1,43 @@
 export const router = () => {
-    let doc = document.querySelector('html');
+    // Variables
+    const linkElements = document.querySelectorAll('[href]') ?? null;
+    const routerElements = document.querySelectorAll('[route]') ?? null;
     
-    // Making routes
-    const routes = {
-        '/' : 'index.html',
-        '/home' : 'home.html',
+    // Rendering the page through route name
+    const render = (element, attribute, route, path) => {
+        if(element != null) {
+            for(let i=0; i<element.length; i++) {
+                let e = element[i].getAttribute(attribute);
+                
+                if(e == route) {
+                    element[i].addEventListener('click', (event) => {
+                        event.preventDefault();
+                        window.location.href = path;
+                    });
+                    break;
+                }
+            }
+        }
     }
-    
-    // Fetching the page
-    const getPage = async (url) => {
-        let response = await fetch(url);
-        let page = await response.text();
-        doc.innerHTML = `${page} <script src="./app.js"><script>`;
-    }
+
+    let routes = window.routes;
+
 
     // looping through each route
-    for (const route in routes) {
-        const path = routes[route];
-        console.log(`Route: ${route}, Path: ${path}`);
+    function checkRoute () {
+        for (const route in routes) {
+            const path = routes[route];
+    
+            if(window.location.pathname == path || window.location.pathname == `/${path}` || `/${window.location.pathname}` == path) {
+                history.pushState(null, null, route);
+            }
+    
+            // console.log(`route : ${route}, path : ${path}`)
+    
+            render(linkElements, 'href', route, path);
+            render(routerElements, 'route', route, path);
+        }
     }
-    
 
-    let route = window.location.pathname;
-    
-    if(route == '/index.html' || route == '/app.html' || route == '/home.html' || route == '/') {
-        history.pushState(null, null, '/');
-    }
-    
-    if(routes[route]) {
-        history.pushState(null, null, route);
-    }
-
-    window.addEventListener('popstate', () => {
-        console.log('State is poped');
-    });
-
-    getPage(routes[route]);
-    
+    checkRoute();
 }
